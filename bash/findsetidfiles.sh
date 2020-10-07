@@ -20,7 +20,7 @@ echo "============="
 find / -type f -executable -perm -4000 -ls 2>/dev/null | sort -k 5
 echo "Largest 12 Files"
 echo "============="
-find / -type f -ls 2>/dev/null | head -n 12
+find / -type f -exec du -h {} + 2>/dev/null | sort -h -r| head -n 10
 
 # for the task, add
 # commands to display a title
