@@ -17,13 +17,23 @@
 ###############
 # Variables   #
 ###############
-title="Overlord"
-user="Nidhin Krishnankutty"
+myname=$USER
 hostname=$(hostname)
+today=$(date +%A)
+time=$(date +"%I:%M %p")
+
+test $today == "MONDAY" && title=red
+test $today == "TUESDAY" && title=green
+test $today == "WEDNESDAY" && title=blue
+test $today == "THURSDAY" && title=yellow
+test $today == "FRIDAY" && title=violet
+test $today == "SATURDAY" && title=maganta
+test $today == "SUNDAY" && title=orange
 
 ###############
 # Main        #
 ###############
 
-output="Welcome to planet $hostname, $title, $user"
+output="It is $today at $time.\
+  Welcome to planet $hostname, \"$title $myname!\""
 cowsay "$output"
