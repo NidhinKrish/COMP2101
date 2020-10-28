@@ -42,11 +42,11 @@
 #         finding the router IP address from the route table, and looking
 #         up the router's hostname using its IP address, not by just
 #         printing out literal text.
-# sample of desired output:
+#   sample of desired output:
 #   Router Address  : 192.168.2.1
 #   Router Hostname : router-name-from-hosts-file
 
-# we use the hostname command to get our system name
+# we use the hostname command to ge                                             t our system name
 # the LAN name is looked up using the LAN address in case it is different from the system name
 # finding external information relies on curl being installed and relies on live internet connection
 # awk is used to extract only the data we want displayed from the commands which produce extra data
@@ -62,7 +62,6 @@
 #
 #    and you would find it gives you your external ip address, so rewrite it to generate and save the data in a variable
 #    then use the variable in any command that needs that data
-#
 #   myExternalIP=$(curl -s icanhazip.com)
 #
 #    then use the variable in any command that needs that data (that had that command pipeline in parentheses)
@@ -75,10 +74,24 @@
 #   External IP     : $myExternalIP
 #   External Name   : $myExternalName
 
-cat <<EOF
-Hostname        : $(hostname)
-LAN Address     : $(ip a s $(ip a |awk '/: e/{gsub(/:/,"");print $2}')|awk '/inet /{gsub(/\/.*/,"");print $2}')
-LAN Hostname    : $(getent hosts $(ip a s $(ip a |awk '/: e/{gsub(/:/,"");print $2}')|awk '/inet /{gsub(/\/.*/,"");print $2}')| awk '{print $2}')
-External IP     : $(curl -s icanhazip.com)
-External Name   : $(getent hosts $(curl -s icanhazip.com) | awk '{print $2}')
-EOF
+#DFG
+
+
+#Data Collection
+Hostname=$(hostname)
+LANAddress=$(ip a s $(ip a |awk '/: e/{gsub(/:/,"");print $2}')|awk '/inet /{gsub(/\/.*/,"");print $2}')
+LANHostname=$(getent hosts $(ip a s $(ip a |awk '/: e/{gsub(/:/,"");print $2}')|awk '/inet /{gsub(/\/.*/,"");print $2}')| awk '{print $2}')
+ExternalIP=$(curl -s icanhazip.com)
+ExternalName=$(getent hosts $(curl -s icanhazip.com) |awk '{print $2}')
+routerIP=$(ip route show default| awk '{print $3}' )
+routerName=$(getent hosts $routerIP | awk '{print $}2')
+
+
+#Output Formating
+echo "Hostname    	; $Hostname"
+echo "LAN Address 	; $LANAddress"
+echo "LAN Hostname 	; $LANHostname"
+echo "External Ip 	; $ExternalIP"
+echo "External Name ; $ExternalName"
+echo "router name   ; $routerName"
+echo "router IP     ; $routerIP"
