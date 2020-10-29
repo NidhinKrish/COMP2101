@@ -83,8 +83,8 @@ LANAddress=$(ip a s $(ip a |awk '/: e/{gsub(/:/,"");print $2}')|awk '/inet /{gsu
 LANHostname=$(getent hosts $(ip a s $(ip a |awk '/: e/{gsub(/:/,"");print $2}')|awk '/inet /{gsub(/\/.*/,"");print $2}')| awk '{print $2}')
 ExternalIP=$(curl -s icanhazip.com)
 ExternalName=$(getent hosts $(curl -s icanhazip.com) |awk '{print $2}')
-routerIP=$(ip route show default| awk '{print $3}' )
-routerName=$(getent hosts $routerIP | awk '{print $}2')
+routerIPAddress=$(ip route show default| awk '{print $3}' )
+routerName=$(getent hosts $routerIPAddress | awk '{print $}2')
 
 
 #Output Formating
@@ -94,4 +94,4 @@ echo "LAN Hostname 	; $LANHostname"
 echo "External Ip 	; $ExternalIP"
 echo "External Name ; $ExternalName"
 echo "router name   ; $routerName"
-echo "router IP     ; $routerIP"
+echo "router IP     ; $routerIPAddress"
