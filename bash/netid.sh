@@ -39,10 +39,10 @@ then
 	    exit
 	    ;;
   esac
-   * )
-   case "$1" in
-   	   echo "interface selected is $*"
-   	   ipv4_address=$(ip a s $* |awk -F '[/ ]+' '/inet /{print $3}')
+  case "$1" in
+   ens33)
+   	   echo "interface selected is ens33"
+   	   ipv4_address=$(ip a s ens33|awk -F '[/ ]+' '/inet /{print $3}')
        echo "The Ipv4 Address is $ipv4_address"
 
   esac
