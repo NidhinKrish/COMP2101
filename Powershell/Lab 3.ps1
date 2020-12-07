@@ -1,0 +1,1 @@
+﻿get-ciminstance win32_networkadapterconfiguration |Where-Object {$_.IPEnabled -eq $True} |select Index,Description,IPAddress,IPSubnet,DNSDomain,DNSServerSearchOrder | FT -autosize
